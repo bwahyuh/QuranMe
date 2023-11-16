@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -32,6 +33,18 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.quranme.ui.theme.QuranMeTheme
+import com.example.quranme.model.Surat
+import com.example.quranme.viewModel.SuratViewModel
+import com.example.quranme.view.SurahItem
+import com.example.quranme.utils.UiState
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
+
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 
 
@@ -39,22 +52,23 @@ class ListSurahActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
             QuranMeTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Background()
-                }
-                Column {
-                    TopBar(onMenuClick = {}, onSearchClick = {})
-                    GreetingSection(userName = "Muhammad")
-                    LastReadSection(surahName = "Al-Fatihah", ayatNumber = 1)
-                    TabsSection(tabs = listOf("Surah", "Juz", "Page"))
+                // Assuming the viewModel has been initialized at this point
+                val viewModel: SuratViewModel = viewModel()
+
+                // Your theme and other UI elements
+                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                    Column {
+                        TopBar(onMenuClick = {}, onSearchClick = {})
+                        GreetingSection(userName = "Muhammad")
+                        LastReadSection(surahName = "Al-Fatihah", ayatNumber = 1)
+                        TabsSection(tabs = listOf("Surah", "Juz", "Page"))
+                        SurahList(viewModel = viewModel) // This will show the list
+                    }
                 }
             }
         }
+
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
@@ -202,4 +216,41 @@ class ListSurahActivity : ComponentActivity() {
                 .background(color = Color(0xFF040C23)) // Match with your theme color
         )
     }
+
+    @Composable
+    fun SurahList(viewModel: SuratViewModel) {
+        val surahListState = viewModel.suratListResponse.observeAsState()
+
+        when (val uiState = surahListState.value) {
+            is UiState.Loading -> {
+                Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                    CircularProgressIndicator()
+                }
+            }
+            is UiState.Success -> {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(vertical = 8.dp)
+                ) {
+                    items(uiState.data ?: emptyList()) { surat ->
+                        SurahItem(surat = surat)
+                    }
+                }
+            }
+            is UiState.Error -> {
+                Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                    Text(text = uiState.error ?: "Unknown error")
+                }
+            }
+            null -> {
+                Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                    CircularProgressIndicator()
+                }
+            }
+        }
+    }
+
+
+
 }
