@@ -1,5 +1,6 @@
 package com.example.quranme
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -49,12 +50,14 @@ class MainActivity : ComponentActivity() {
 
                         Spacer(modifier = Modifier.height(8.dp))
                         ButtonRect(
-                            onClick = { /*TODO*/ }, "Get Started")
-                        }
-                    }
-                    Column {
+                            onClick = {
+                                     val navigate = Intent(this@MainActivity, ListSurahActivity::class.java)
+                                        this@MainActivity.startActivity(navigate)
+                            },"Get Started")
 
                     }
+
+
                 }
             }
         }
@@ -158,6 +161,15 @@ fun DefaultPreview() {
                 Title("QuranMe")
                 Spacer(modifier = Modifier.height(8.dp))
                 Description("Learn Quran and Recite once everyday")
+
+                Spacer(modifier = Modifier.height(8.dp))
+                ButtonRect(
+                    onClick = { /*TODO*/ }, "Get Started")
+
+                Spacer(modifier = Modifier.height(8.dp))
+                ButtonRect(
+                    onClick = { /*TODO*/ }, "Halo")
+            }
             }
         }
     }

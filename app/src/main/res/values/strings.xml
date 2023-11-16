@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">QuranMe</string>
+    <string name="title_activity_list_surah">ListSurahActivity</string>
 </resources>
