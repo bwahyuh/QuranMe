@@ -1,4 +1,4 @@
-package com.example.quranme.model
+package com.example.quranme.data.model
 
 import com.google.gson.annotations.SerializedName
 

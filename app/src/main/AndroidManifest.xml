@@ -21,12 +21,12 @@
         >
 
         <activity
-            android:name=".ListSurahActivity"
+            android:name=".ui.quran.CariBacaanActivity"
             android:exported="false"
             android:label="@string/title_activity_list_surah"
             android:theme="@style/Theme.QuranMe" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.main.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.QuranMe">

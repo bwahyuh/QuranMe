@@ -1,4 +1,4 @@
-package com.example.quranme.utils
+package com.example.quranme.compose.state
 
 sealed class UiState<out T> {
     object Loading : UiState<Nothing>()
