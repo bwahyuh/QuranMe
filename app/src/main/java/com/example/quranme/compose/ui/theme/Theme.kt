@@ -1,4 +1,4 @@
-package com.example.quranme.ui.theme
+package com.example.quranme.compose.ui.theme
 
 import android.app.Activity
 import android.os.Build

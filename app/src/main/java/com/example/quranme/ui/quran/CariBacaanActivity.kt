@@ -1,75 +1,105 @@
-package com.example.quranme
+package com.example.quranme.ui.quran
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material3.Text
+import androidx.activity.viewModels
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.quranme.ui.theme.QuranMeTheme
-import com.example.quranme.model.Surat
-import com.example.quranme.viewModel.SuratViewModel
-import com.example.quranme.view.SurahItem
-import com.example.quranme.utils.UiState
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Text
-
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.quranme.compose.page.JuzListView
+//import com.example.quranme.compose.page.ListJuz
+import com.example.quranme.compose.page.SurahList
+import com.example.quranme.compose.ui.theme.QuranMeTheme
+import com.example.quranme.compose.state.UiState
+import com.example.quranme.data.model.Juz
+import com.example.quranme.data.model.JuzData
+import com.example.quranme.data.model.Surat
+import com.example.quranme.ui.quran.JuzViewModel
+//import com.example.quranme.compose.page.JuzViewModel
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.lifecycle.viewmodel.compose.viewModel
 
-
-
-class ListSurahActivity : ComponentActivity() {
+class CariBacaanActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val viewModelSurat: SuratViewModel by viewModels { SuratViewModelFactory(applicationContext) }
+        val viewModelJuz: JuzViewModel by viewModels { JuzViewModelFactory(applicationContext) }
+
         setContent {
             QuranMeTheme {
-                // Assuming the viewModel has been initialized at this point
-                val viewModel: SuratViewModel = viewModel()
+                // Initialize your ViewModels and other variables
+                var selectedTab by remember { mutableStateOf("Juz") }
 
-                // Your theme and other UI elements
+                // Observe the LiveData from the ViewModel
+                val surahListState by viewModelSurat.suratListResponse.observeAsState()
+                val juzData by viewModelJuz.juzData.observeAsState()
+                val surahsByJuzMap by viewModelJuz.surahsByJuz.observeAsState()
+
+                // Use LaunchedEffect to construct the map once the Surahs are loaded
+                LaunchedEffect(surahListState) {
+                    if (surahListState is UiState.Success) {
+                        viewModelJuz.constructSurahsByJuzMap()
+                    }
+                }
+
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                     Column {
                         TopBar(onMenuClick = {}, onSearchClick = {})
                         GreetingSection(userName = "Muhammad")
                         LastReadSection(surahName = "Al-Fatihah", ayatNumber = 1)
-                        TabsSection(tabs = listOf("Surah", "Juz", "Page"))
-                        SurahList(viewModel = viewModel) // This will show the list
+                        TabsSection(
+                            tabs = listOf("Surah", "Juz"),
+                            selectedTab = selectedTab,
+                            onTabSelected = { tab ->
+                                selectedTab = tab
+                            }
+                        )
+
+                        when (selectedTab) {
+                            "Surah" -> {
+                                SurahList(viewModel = viewModelSurat)
+                            }
+                            "Juz" -> {
+                                // Display JuzListView when the map is ready
+                                surahsByJuzMap?.let { map ->
+                                    JuzListView(
+                                        juzData = juzData,
+                                        surahsByJuzMap = map,
+                                        onSurahClick = { surat ->
+                                            // Handle Surah click
+                                        }
+                                    )
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
-
     }
+
+
+
+
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
@@ -166,18 +196,21 @@ class ListSurahActivity : ComponentActivity() {
 
 
     @Composable
-    fun TabsSection(tabs: List<String>) {
-        var selectedTabIndex by remember { mutableStateOf(0) }
+    fun TabsSection(tabs: List<String>, selectedTab: String, onTabSelected: (String) -> Unit) {
+        var selectedTabIndex by remember { mutableStateOf(if (selectedTab == "Surah") 0 else 1) }
 
         TabRow(
             selectedTabIndex = selectedTabIndex,
-            containerColor = Color(0xFF040C23), // Match with your theme color
+            containerColor = Color(0xFF040C23),
             contentColor = Color.White
         ) {
             tabs.forEachIndexed { index, title ->
                 Tab(
                     selected = selectedTabIndex == index,
-                    onClick = { selectedTabIndex = index },
+                    onClick = {
+                        selectedTabIndex = index
+                        onTabSelected(title) // Update the state with the selected tab title
+                    },
                     text = {
                         Text(
                             text = title,
@@ -188,6 +221,7 @@ class ListSurahActivity : ComponentActivity() {
             }
         }
     }
+
 
     @Preview(showBackground = true)
     @Composable
@@ -203,7 +237,7 @@ class ListSurahActivity : ComponentActivity() {
                 TopBar(onMenuClick = {}, onSearchClick = {})
                 GreetingSection(userName = "Muhammad")
                 LastReadSection(surahName = "Al-Fatihah", ayatNumber = 1)
-                TabsSection(tabs = listOf("Surah", "Juz", "Page"))
+//            TabsSection(tabs = listOf("Surah", "Juz"))
             }
         }
     }
@@ -216,41 +250,6 @@ class ListSurahActivity : ComponentActivity() {
                 .background(color = Color(0xFF040C23)) // Match with your theme color
         )
     }
-
-    @Composable
-    fun SurahList(viewModel: SuratViewModel) {
-        val surahListState = viewModel.suratListResponse.observeAsState()
-
-        when (val uiState = surahListState.value) {
-            is UiState.Loading -> {
-                Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-                    CircularProgressIndicator()
-                }
-            }
-            is UiState.Success -> {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(vertical = 8.dp)
-                ) {
-                    items(uiState.data ?: emptyList()) { surat ->
-                        SurahItem(surat = surat)
-                    }
-                }
-            }
-            is UiState.Error -> {
-                Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-                    Text(text = uiState.error ?: "Unknown error")
-                }
-            }
-            null -> {
-                Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-                    CircularProgressIndicator()
-                }
-            }
-        }
-    }
-
 
 
 }

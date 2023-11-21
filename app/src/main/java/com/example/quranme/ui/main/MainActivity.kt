@@ -1,4 +1,4 @@
-package com.example.quranme
+package com.example.quranme.ui.main
 
 import android.content.Intent
 import android.os.Bundle
@@ -15,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -24,7 +23,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.quranme.ui.theme.QuranMeTheme
+//import com.example.quranme.ui.quran.ListSurahActivity
+import com.example.quranme.R
+import com.example.quranme.compose.ui.theme.QuranMeTheme
+import com.example.quranme.ui.quran.CariBacaanActivity
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,13 +53,11 @@ class MainActivity : ComponentActivity() {
                         Spacer(modifier = Modifier.height(8.dp))
                         ButtonRect(
                             onClick = {
-                                     val navigate = Intent(this@MainActivity, ListSurahActivity::class.java)
+                                     val navigate = Intent(this@MainActivity, CariBacaanActivity::class.java)
                                         this@MainActivity.startActivity(navigate)
                             },"Get Started")
 
                     }
-
-
                 }
             }
         }

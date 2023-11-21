@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.devtools.ksp")
+//    id ("kotlin-kapt")
 }
 
 android {
@@ -47,6 +49,8 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+
 }
 
 dependencies {
@@ -63,6 +67,13 @@ dependencies {
 
     // Livedata
     implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
+
+
+    // ViewModel and LiveData
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
+
 
 
     // Compose
@@ -86,4 +97,17 @@ dependencies {
 
     // ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+
+    // hilt
+//    implementation ("com.google.dagger:hilt-android:2.41")
+//    kapt ("com.google.dagger:hilt-android-compiler:2.39.1")
+//    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+
+
+    // Serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
+
+    // to parse json data
+//    implementation ('com.google.code.gson:gson:2.8.6')
+
 }
