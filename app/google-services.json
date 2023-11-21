@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "433169932478",
+    "project_id": "quranme-cb756",
+    "storage_bucket": "quranme-cb756.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:433169932478:android:bc3909d050d42c27a83eef",
+        "android_client_info": {
+          "package_name": "com.example.quranme"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7Fq-ITIpvRlJRRbUyvu6IiybPv4CGK_4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
