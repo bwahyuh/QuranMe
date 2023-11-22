@@ -1,5 +1,6 @@
 package com.example.quranme.ui.quran
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -61,7 +62,10 @@ class CariBacaanActivity : ComponentActivity() {
                     }
                 }
 
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
                     Column {
                         TopBar(onMenuClick = {}, onSearchClick = {})
                         GreetingSection(userName = "Muhammad")
@@ -78,6 +82,7 @@ class CariBacaanActivity : ComponentActivity() {
                             "Surah" -> {
                                 SurahList(viewModel = viewModelSurat)
                             }
+
                             "Juz" -> {
                                 // Display JuzListView when the map is ready
                                 surahsByJuzMap?.let { map ->
@@ -85,8 +90,11 @@ class CariBacaanActivity : ComponentActivity() {
                                         juzData = juzData,
                                         surahsByJuzMap = map,
                                         onSurahClick = { surat ->
-                                            // Handle Surah click
+                                            val intent = Intent(this@CariBacaanActivity, QuranActivity::class.java)
+                                            intent.putExtra("SURAH_NUMBER", surat.nomor)
+                                            startActivity(intent)
                                         }
+
                                     )
                                 }
                             }
@@ -96,9 +104,6 @@ class CariBacaanActivity : ComponentActivity() {
             }
         }
     }
-
-
-
 
 
     @OptIn(ExperimentalMaterial3Api::class)
