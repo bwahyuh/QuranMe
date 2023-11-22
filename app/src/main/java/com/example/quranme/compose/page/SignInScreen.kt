@@ -1,4 +1,4 @@
-package com.example.quranme.view
+package com.example.quranme.compose.page
 //
 //import android.os.Build
 //import androidx.annotation.RequiresApi
