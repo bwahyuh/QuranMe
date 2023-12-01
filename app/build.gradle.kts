@@ -1,9 +1,13 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
 
     id("com.google.devtools.ksp")
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.6.10"
+
 }
 
 android {
@@ -11,6 +15,20 @@ android {
     compileSdk = 34
 
     defaultConfig {
+
+        val keystoreFile = project.rootProject.file("apikeys.properties")
+        if (keystoreFile.exists()) {
+            val properties = Properties()
+            properties.load(keystoreFile.inputStream())
+
+            // Get the API key, or use an empty string if not found
+            val apiKey = properties.getProperty("GPT_API_KEY") ?: ""
+
+            // Add the API key to BuildConfig
+            buildConfigField("String", "GPT_API_KEY", "\"$apiKey\"")
+        }
+
+
         applicationId = "com.example.quranme"
         minSdk = 24
         targetSdk = 33
@@ -21,7 +39,10 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+
     }
+
 
     buildTypes {
         release {
@@ -41,13 +62,17 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
     }
     packaging {
         resources {
+            excludes += "/META-INF/INDEX.LIST"
+            excludes += "/META-INF/io.netty.versions.properties"
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+
         }
     }
 }
@@ -93,4 +118,21 @@ dependencies {
 
     // ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+
+
+    // backend untuk chatbot
+    implementation("io.ktor:ktor-client-android:1.6.7")
+    implementation("io.ktor:ktor-client-serialization:1.6.7")
+    implementation("io.ktor:ktor-client-logging:1.6.7")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
+
+    // ktor utk backend
+    implementation("io.ktor:ktor-server-netty:1.6.7")
+    implementation("ch.qos.logback:logback-classic:1.2.3")
+    implementation("io.ktor:ktor-server-core:1.6.7")
+    implementation("io.ktor:ktor-server-host-common:1.6.7")
+    implementation("io.ktor:ktor-client-cio:1.6.7")
+    implementation("io.ktor:ktor-client-gson:1.6.7")
+
 }

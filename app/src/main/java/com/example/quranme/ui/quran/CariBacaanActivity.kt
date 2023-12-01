@@ -9,7 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -38,6 +38,8 @@ import com.example.quranme.data.model.Surat
 import com.example.quranme.ui.quran.JuzViewModel
 //import com.example.quranme.compose.page.JuzViewModel
 import androidx.compose.runtime.livedata.observeAsState
+import com.example.quranme.compose.ui.navigation.TopBar
+import com.example.quranme.compose.ui.theme.fontFamily
 
 class CariBacaanActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +49,7 @@ class CariBacaanActivity : ComponentActivity() {
 
         setContent {
             QuranMeTheme {
+
                 // Initialize your ViewModels and other variables
                 var selectedTab by remember { mutableStateOf("Juz") }
 
@@ -106,46 +109,7 @@ class CariBacaanActivity : ComponentActivity() {
     }
 
 
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    fun TopBar(onMenuClick: () -> Unit, onSearchClick: () -> Unit) {
-        SmallTopAppBar(
-            title = {
-                Text(
-                    text = "Quran App",
-                    modifier = Modifier.fillMaxWidth(),
-                    style = TextStyle(
-                        color = Color.White,
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold
-                    ),
-                    textAlign = TextAlign.Center
-                )
-            },
-            navigationIcon = {
-                IconButton(onClick = { onMenuClick() }) {
-                    Icon(
-                        imageVector = Icons.Filled.Menu,
-                        contentDescription = "Menu",
-                        tint = Color.White
-                    )
-                }
-            },
-            actions = {
-                IconButton(onClick = { onSearchClick() }) {
-                    Icon(
-                        imageVector = Icons.Filled.Search,
-                        contentDescription = "Search",
-                        tint = Color.White
-                    )
-                }
-            },
-            colors = TopAppBarDefaults.smallTopAppBarColors(
-                containerColor = Color(0xFF040C23), // Match with your theme color
-                titleContentColor = Color.White
-            )
-        )
-    }
+
 
     @Composable
     fun GreetingSection(userName: String) {
