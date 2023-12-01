@@ -45,7 +45,7 @@ fun SignInScreen(modifier: Modifier = Modifier) {
                 cursorColor = Color.White,
                 focusedBorderColor = Color.White,
                 unfocusedBorderColor = Color.White,
-                containerColor = Color.LightGray
+                containerColor = Color.Transparent
             ),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             modifier = Modifier.fillMaxWidth()
@@ -62,7 +62,7 @@ fun SignInScreen(modifier: Modifier = Modifier) {
                 cursorColor = Color.White,
                 focusedBorderColor = Color.White,
                 unfocusedBorderColor = Color.White,
-                containerColor = Color.LightGray
+                containerColor = Color.Transparent
             ),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             modifier = Modifier.fillMaxWidth()
@@ -113,7 +113,7 @@ fun SignInScreen(modifier: Modifier = Modifier) {
         Box(
             modifier = modifier
                 .requiredWidth(width = 390.dp)
-                .requiredHeight(height = 180.dp)
+                .requiredHeight(height = 200.dp)
                 .align(alignment = Alignment.CenterHorizontally)
         )
         Box(
