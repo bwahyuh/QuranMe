@@ -56,6 +56,31 @@ fun SettingsScreen(onBackClick: () -> Unit) {
         Spacer(modifier = Modifier.height(16.dp))
         SettingItem(title = "Terms & Condition", color = Color(0xFFA44AFF))
 
+//        Spacer(modifier = Modifier.weight(1f))
+//        // BottomBar component here
+//        com.example.quranme.compose.ui.components.BottomBar(
+//            onHomeClick = { /* Handle home click */ },
+//            onGPTClick = { /* Handle GPT click */ },
+//            onScheduleClick = { /* Handle schedule click */ }
+//        )
+
+    }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(0.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        // Top Bar with back button and title
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 32.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+        }
+
         Spacer(modifier = Modifier.weight(1f))
         // BottomBar component here
         com.example.quranme.compose.ui.components.BottomBar(
