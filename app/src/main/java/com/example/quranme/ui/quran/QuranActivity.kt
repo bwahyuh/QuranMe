@@ -13,6 +13,8 @@ import com.example.quranme.compose.page.QuranReader
 class QuranActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+
         super.onCreate(savedInstanceState)
         val surahNumber = intent.getIntExtra("SURAH_NUMBER", 1) // Default to 1 if not found
 
