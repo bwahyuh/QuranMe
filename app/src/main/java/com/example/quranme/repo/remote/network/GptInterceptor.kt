@@ -1,6 +1,6 @@
 package com.example.quranme.repo.remote.network
 
-import com.example.quranme.BuildConfig
+//import com.example.quranme.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -8,7 +8,7 @@ class GptInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
         val newRequest = originalRequest.newBuilder()
-            .header("Authorization", "Bearer ${BuildConfig.GPT_API_KEY}")
+            .header("Authorization", "Bearer ${"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"}")
             .build()
         return chain.proceed(newRequest)
     }

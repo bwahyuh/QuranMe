@@ -7,13 +7,13 @@ import io.ktor.client.features.*
 import io.ktor.client.features.json.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import com.example.quranme.BuildConfig
+//import com.example.quranme.BuildConfig
 import io.ktor.client.call.receive
 import io.ktor.client.statement.HttpResponse
 import kotlinx.serialization.Serializable
 
 class GPTService {
-    private val apiKey = BuildConfig.GPT_API_KEY
+    private val apiKey = "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"
 
     private val client = HttpClient(CIO) {
         install(JsonFeature) {

@@ -3,8 +3,11 @@ package com.example.quranme.ui.quran
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModelProvider
 import com.example.quranme.compose.ui.theme.QuranMeTheme
@@ -41,8 +44,15 @@ class QuranActivity : ComponentActivity() {
             // Transform the map keys from String to Int
             ?.mapKeys { it.key.toIntOrNull() ?: 0 } ?: emptyMap()
 
-        if (ayahs != null) {
-            QuranReader(ayahs, audioMap, context)
+        // Menggunakan Column untuk mengatur tata letak
+        Column(modifier = Modifier.fillMaxSize()) {
+            // Jika ada ayat, tampilkan QuranReader
+            if (ayahs != null) {
+                QuranReader(ayahs, audioMap, context)
+            }
+
+            // BottomBar ditempatkan di bagian bawah Column
+            com.example.quranme.compose.ui.components.BottomBar()
         }
     }
 

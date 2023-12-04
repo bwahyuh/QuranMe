@@ -107,6 +107,8 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx:22.3.0")
     implementation("com.google.firebase:firebase-analytics:21.5.0")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
+    implementation("com.google.firebase:firebase-auth:22.3.0")
+    implementation("com.google.firebase:firebase-database:20.3.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -135,4 +137,9 @@ dependencies {
     implementation("io.ktor:ktor-client-cio:1.6.7")
     implementation("io.ktor:ktor-client-gson:1.6.7")
 
+    implementation("androidx.compose.runtime:runtime-livedata:1.1.1")
+    debugImplementation("androidx.compose.ui:ui-tooling-preview:1.1.1")
+
+    // For image loading, if needed
+    implementation("com.google.accompanist:accompanist-coil:0.13.0")
 }

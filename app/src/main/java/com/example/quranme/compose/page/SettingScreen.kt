@@ -18,6 +18,11 @@ import com.example.quranme.R
 import com.example.quranme.compose.ui.components.BottomBar
 @Composable
 fun SettingsScreen(onBackClick: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black) // Mengubah latar belakang menjadi hitam
+    )
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -55,14 +60,6 @@ fun SettingsScreen(onBackClick: () -> Unit) {
         SettingItem(title = "Privacy Policy", color = Color(0xFFA44AFF))
         Spacer(modifier = Modifier.height(16.dp))
         SettingItem(title = "Terms & Condition", color = Color(0xFFA44AFF))
-
-//        Spacer(modifier = Modifier.weight(1f))
-//        // BottomBar component here
-//        com.example.quranme.compose.ui.components.BottomBar(
-//            onHomeClick = { /* Handle home click */ },
-//            onGPTClick = { /* Handle GPT click */ },
-//            onScheduleClick = { /* Handle schedule click */ }
-//        )
 
     }
     Column(

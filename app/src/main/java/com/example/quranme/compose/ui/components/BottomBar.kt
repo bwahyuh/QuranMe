@@ -13,6 +13,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.quranme.R
 import com.example.quranme.compose.page.SignUpScreen
+import androidx.compose.ui.platform.LocalContext
+import android.content.Intent
+import com.example.quranme.ui.chatbot.ChatbotActivity
+import com.example.quranme.ui.main.HomeActivity
+import com.example.quranme.ui.main.ScheduleActivity
+
 
 @Composable
 fun BottomBar(
@@ -20,6 +26,7 @@ fun BottomBar(
     onGPTClick: () -> Unit = {},  // Placeholder for GPT click events
     onScheduleClick: () -> Unit = {} // Placeholder for schedule click events
 ) {
+    val context = LocalContext.current
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -29,7 +36,10 @@ fun BottomBar(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         // Home Button
-        IconButton(onClick = onHomeClick) {
+        IconButton(onClick = {
+            // Menangani klik tombol home
+            context.startActivity(Intent(context, HomeActivity::class.java))
+        }) {
             Image(
                 painter = painterResource(id = R.drawable.home), // Replace with your actual home icon drawable resource
                 contentDescription = "Home",
@@ -38,7 +48,10 @@ fun BottomBar(
         }
 
         // GPT Button
-        IconButton(onClick = onGPTClick) {
+        IconButton(onClick ={
+            // Menangani klik tombol GPT
+            context.startActivity(Intent(context, ChatbotActivity::class.java))
+        }) {
             Image(
                 painter = painterResource(id = R.drawable.gpt), // Replace with your actual GPT icon drawable resource
                 contentDescription = "GPT",
@@ -47,7 +60,10 @@ fun BottomBar(
         }
 
         // Schedule Button
-        IconButton(onClick = onScheduleClick) {
+        IconButton(onClick = {
+            // Menangani klik tombol GPT
+            context.startActivity(Intent(context, ScheduleActivity::class.java))
+        }) {
             Image(
                 painter = painterResource(id = R.drawable.schedule), // Replace with your actual schedule icon drawable resource
                 contentDescription = "Schedule",

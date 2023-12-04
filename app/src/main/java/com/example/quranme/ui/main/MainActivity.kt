@@ -55,7 +55,7 @@ class MainActivity : ComponentActivity() {
                         ButtonRect(
                             onClick = {
                                 val navigate =
-                                    Intent(this@MainActivity, CariBacaanActivity::class.java)
+                                    Intent(this@MainActivity, HomeActivity::class.java)
                                 this@MainActivity.startActivity(navigate)
                             }, "Get Started"
                         )

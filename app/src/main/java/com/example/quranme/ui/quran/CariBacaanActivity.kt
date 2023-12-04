@@ -103,6 +103,29 @@ class CariBacaanActivity : ComponentActivity() {
                             }
                         }
                     }
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(0.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        // Top Bar with back button and title
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 32.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+
+                        }
+
+                        Spacer(modifier = Modifier.weight(1f))
+                        // BottomBar component here
+                        com.example.quranme.compose.ui.components.BottomBar(
+                        )
+
+                    }
+
                 }
             }
         }
