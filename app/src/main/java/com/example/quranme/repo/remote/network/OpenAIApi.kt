@@ -9,7 +9,7 @@ import retrofit2.http.POST
 
 
 interface OpenAIApi {
-    @Headers("Content-Type: application/json", "Authorization: Bearer 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")
+    @Headers("Content-Type: application/json", "Authorization: Bearer awokawokoawkowak")
     @POST("v1/chat/completions")
     suspend fun generateResponse(@Body requestBody: OpenAIRequestBody): OpenAIResponse
 }

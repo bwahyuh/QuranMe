@@ -8,7 +8,7 @@ class GptInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
         val newRequest = originalRequest.newBuilder()
-            .header("Authorization", "Bearer ${"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"}")
+            .header("Authorization", "Bearer ${"akwokaowkowa"}")
             .build()
         return chain.proceed(newRequest)
     }
