@@ -142,4 +142,7 @@ dependencies {
 
     // For image loading, if needed
     implementation("com.google.accompanist:accompanist-coil:0.13.0")
+
+
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.0")
 }
