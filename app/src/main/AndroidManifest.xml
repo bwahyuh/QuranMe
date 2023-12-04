@@ -24,7 +24,14 @@
             android:exported="true"
             android:label="@string/title_activity_quran"
             android:theme="@style/Theme.QuranMe" />
-
+        <activity android:name=".ui.quiz.HasilQuizActivity"
+            android:exported="true"
+            android:label="title_activity_pilihan_quiz"
+            android:theme="@style/Theme.QuranMe"/>
+        <activity android:name=".ui.quiz.IsiQuiz"
+            android:exported="true"
+            android:label="title_activity_isi_quiz"
+            android:theme="@style/Theme.QuranMe"/>
         <activity
             android:name=".ui.quran.CariBacaanActivity"
             android:exported="false"

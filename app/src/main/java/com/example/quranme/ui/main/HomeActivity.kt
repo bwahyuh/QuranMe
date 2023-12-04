@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,19 +12,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.quranme.compose.ui.components.BottomBar
+import com.example.quranme.ui.quiz.PilihanQuiz
 import com.example.quranme.compose.ui.components.TopBar
 import com.example.quranme.compose.ui.components.Menu
 import com.example.quranme.compose.ui.components.LastReadSection
-import com.example.quranme.compose.ui.theme.QuranMeTheme
 import com.example.quranme.compose.page.PrayerTimeList
-import com.example.quranme.compose.page.PrayerTimesScreen
+import com.example.quranme.ui.quiz.IsiQuiz
 import com.example.quranme.ui.quran.CariBacaanActivity
 
 class HomeActivity : ComponentActivity() {
@@ -49,8 +45,9 @@ class HomeActivity : ComponentActivity() {
                 currentTime = "15:00 WIB",
                 onMenuSelected = { menuTitle ->
                     when (menuTitle) {
-                        "Al-Qur'an", "Quiz", "Bookmark" -> navigateToCariBacaanActivity()
+                        "Al-Qur'an", "Bookmark" -> navigateToCariBacaanActivity()
                         "Settings" -> navigateToSettingScreen()
+                        "Quiz" -> navigateToQuizActivity()
                     }
                 }
             )
@@ -92,6 +89,11 @@ class HomeActivity : ComponentActivity() {
 
     private fun navigateToSettingScreen() {
         val intent = Intent(this, SettingsActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun navigateToQuizActivity() {
+        val intent = Intent(this, IsiQuiz::class.java)
         startActivity(intent)
     }
 }
