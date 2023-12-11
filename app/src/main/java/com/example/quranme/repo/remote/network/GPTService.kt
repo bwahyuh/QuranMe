@@ -13,7 +13,7 @@ import io.ktor.client.statement.HttpResponse
 import kotlinx.serialization.Serializable
 
 class GPTService {
-    private val apiKey = "awkokawokoakw"
+    private val apiKey = ""
 
     private val client = HttpClient(CIO) {
         install(JsonFeature) {

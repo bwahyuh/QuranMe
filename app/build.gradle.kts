@@ -143,6 +143,27 @@ dependencies {
     // For image loading, if needed
     implementation("com.google.accompanist:accompanist-coil:0.13.0")
 
-
     implementation ("com.squareup.okhttp3:logging-interceptor:4.9.0")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.0")
+
+    implementation("com.google.android.gms:play-services-location:18.0.0")
+
+    // CameraX
+    implementation("androidx.camera:camera-camera2:1.3.0-alpha06")
+    implementation("androidx.camera:camera-lifecycle:1.3.0-alpha06")
+    implementation("androidx.camera:camera-view:1.3.0-alpha06")
+
+// MLKit
+    implementation("com.google.mlkit:face-detection:16.1.5")
+    implementation("com.google.mlkit:image-labeling:17.0.7")
+    implementation("com.google.mlkit:object-detection:17.0.0")
+    implementation("com.google.mlkit:barcode-scanning:17.1.0")
+    implementation("com.google.mlkit:text-recognition:16.0.0-beta6")
+    implementation("com.google.mlkit:face-mesh-detection:16.0.0-beta1")
+
+    // Accompanist
+    implementation("com.google.accompanist:accompanist-navigation-animation:0.23.0")
+    implementation("com.google.accompanist:accompanist-permissions:0.19.0")
+
+
 }

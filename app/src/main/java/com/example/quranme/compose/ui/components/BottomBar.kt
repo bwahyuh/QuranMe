@@ -15,13 +15,15 @@ import com.example.quranme.R
 import com.example.quranme.compose.page.SignUpScreen
 import androidx.compose.ui.platform.LocalContext
 import android.content.Intent
+import androidx.navigation.NavController
 import com.example.quranme.ui.chatbot.ChatbotActivity
 import com.example.quranme.ui.main.HomeActivity
+import com.example.quranme.ui.main.ImageAnalyzerActivity
 import com.example.quranme.ui.main.ScheduleActivity
 
 
 @Composable
-fun BottomBar(
+fun BottomBar(navController: NavController,
     onHomeClick: () -> Unit = {}, // Placeholder for home click events
     onGPTClick: () -> Unit = {},  // Placeholder for GPT click events
     onScheduleClick: () -> Unit = {} // Placeholder for schedule click events
@@ -60,9 +62,9 @@ fun BottomBar(
         }
 
         // Schedule Button
-        IconButton(onClick = {
+        IconButton(onClick ={
             // Menangani klik tombol GPT
-            context.startActivity(Intent(context, ScheduleActivity::class.java))
+            context.startActivity(Intent(context, ImageAnalyzerActivity::class.java))
         }) {
             Image(
                 painter = painterResource(id = R.drawable.schedule), // Replace with your actual schedule icon drawable resource
@@ -75,5 +77,5 @@ fun BottomBar(
 @Preview(showBackground = true)
 @Composable
 fun PreviewBottomBar() {
-    BottomBar()
+    BottomBar(NavController(LocalContext.current))
 }

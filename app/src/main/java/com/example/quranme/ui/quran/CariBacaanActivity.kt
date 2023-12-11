@@ -38,6 +38,8 @@ import com.example.quranme.data.model.Surat
 import com.example.quranme.ui.quran.JuzViewModel
 //import com.example.quranme.compose.page.JuzViewModel
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavController
 import com.example.quranme.compose.ui.navigation.TopBar
 import com.example.quranme.compose.ui.theme.fontFamily
 
@@ -122,6 +124,7 @@ class CariBacaanActivity : ComponentActivity() {
                         Spacer(modifier = Modifier.weight(1f))
                         // BottomBar component here
                         com.example.quranme.compose.ui.components.BottomBar(
+                            NavController(LocalContext.current)
                         )
 
                     }

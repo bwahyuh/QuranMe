@@ -48,7 +48,7 @@ fun TopBar(onMenuClick: () -> Unit, onSearchClick: () -> Unit) {
         navigationIcon = {
             IconButton(onClick ={
                 // Menangani klik tombol GPT
-                context.startActivity(Intent(context, CariBacaanActivity::class.java))
+                context.startActivity(Intent(context, HomeActivity::class.java))
             }) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,

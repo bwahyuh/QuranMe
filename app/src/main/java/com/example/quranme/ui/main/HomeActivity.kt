@@ -15,7 +15,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.quranme.ui.quiz.PilihanQuiz
 import com.example.quranme.compose.ui.components.TopBar
 import com.example.quranme.compose.ui.components.Menu
@@ -76,6 +78,7 @@ class HomeActivity : ComponentActivity() {
                 Spacer(modifier = Modifier.weight(1f))
                 // BottomBar component here
                 com.example.quranme.compose.ui.components.BottomBar(
+                    NavController(LocalContext.current)
                 )
 
             }

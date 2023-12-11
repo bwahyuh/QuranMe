@@ -13,9 +13,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.quranme.ui.chatbot.ChatViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -84,7 +86,7 @@ fun ChatScreen(viewModel: ChatViewModel) {
         }
 
         // Menambahkan BottomBar di sini
-        com.example.quranme.compose.ui.components.BottomBar()
+        com.example.quranme.compose.ui.components.BottomBar(NavController(LocalContext.current))
     }
 
     if (showErrorDialog) {

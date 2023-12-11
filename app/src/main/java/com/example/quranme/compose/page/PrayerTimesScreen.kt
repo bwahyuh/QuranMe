@@ -19,7 +19,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import com.example.quranme.compose.ui.components.BottomBar
 
 @Composable
@@ -52,6 +54,7 @@ fun PrayerTimesScreen(prayerTimes: Timings) {
             Spacer(modifier = Modifier.weight(1f))
             // BottomBar component here
             com.example.quranme.compose.ui.components.BottomBar(
+                NavController(LocalContext.current)
             )
 
         }

@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.quranme.R
 import com.example.quranme.compose.ui.theme.QuranMeTheme
+import com.example.quranme.ui.main.HomeActivity
 
 
 class HasilQuizActivity : ComponentActivity() {
@@ -105,7 +106,7 @@ fun ScoreText(score: Int, totalQuestions: Int) {
 
         Button(
             onClick = {
-                val intent = Intent(context, PilihanQuiz::class.java)
+                val intent = Intent(context, HomeActivity::class.java)
                 context.startActivity(intent)
             },
             modifier = Modifier

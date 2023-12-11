@@ -10,6 +10,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
 import com.example.quranme.compose.ui.theme.QuranMeTheme
 import com.example.quranme.compose.page.QuranReader
 
@@ -52,7 +53,7 @@ class QuranActivity : ComponentActivity() {
             }
 
             // BottomBar ditempatkan di bagian bawah Column
-            com.example.quranme.compose.ui.components.BottomBar()
+            com.example.quranme.compose.ui.components.BottomBar(NavController(LocalContext.current))
         }
     }
 
