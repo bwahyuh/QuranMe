@@ -1,11 +1,8 @@
 package com.example.quranme.ui.quran
 
 import android.content.Context
-import androidx.lifecycle.*
 import com.example.quranme.R
-import com.example.quranme.compose.page.Ayah
 import com.example.quranme.data.model.Ayat
-import com.example.quranme.data.model.AyatData
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
 
@@ -18,7 +15,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.quranme.data.model.Surat
 import com.example.quranme.data.model.SuratResponse
 import com.google.gson.JsonSyntaxException
-import com.google.gson.reflect.TypeToken
 
 class QuranViewModel(private val context: Context) : ViewModel() {
     private val _ayahsForSurah = MutableLiveData<List<Ayat>?>()

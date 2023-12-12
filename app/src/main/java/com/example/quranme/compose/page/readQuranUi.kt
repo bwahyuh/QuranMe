@@ -5,8 +5,10 @@ import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.net.Uri
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,6 +19,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -28,9 +31,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.quranme.compose.ui.theme.QuranMeTheme
 import com.example.quranme.data.model.Ayat
 import com.example.quranme.data.model.Surat
+import androidx.compose.ui.res.painterResource
+import com.example.quranme.R
 
 @Composable
 fun AyahItem(
@@ -45,45 +51,81 @@ fun AyahItem(
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
-        // Ayah number
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .size(40.dp)
-                .background(MaterialTheme.colorScheme.primary, CircleShape)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.Top,
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(
-                text = ayahNumber.toString(),
-                style = MaterialTheme.typography.bodyLarge.copy(color = MaterialTheme.colorScheme.onPrimary)
-            )
-        }
-        Spacer(modifier = Modifier.height(8.dp))
+            // Number circle and ayah number
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .size(40.dp)
+                    .background(MaterialTheme.colorScheme.primary, CircleShape)
+            ) {
+                Text(
+                    text = ayahNumber.toString(),
+                    style = MaterialTheme.typography.bodyLarge.copy(color = MaterialTheme.colorScheme.onPrimary)
+                )
+            }
 
-        // Play Audio Button
-        IconButton(onClick = { onPlayAudio(audioUrl) }) {
-            Icon(Icons.Default.PlayArrow, contentDescription = "Play Audio")
+            // Icon row for audio, share, and bookmark
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(onClick = { onPlayAudio(audioUrl) }) {
+                    Icon(
+                        Icons.Default.PlayArrow,
+                        contentDescription = "Play Audio",
+                        tint = MaterialTheme.colorScheme.onBackground
+                    )
+                }
+
+                // Share Button
+                IconButton(onClick = { /* TODO: handle share */ }) {
+                    Icon(
+                        Icons.Default.Share,
+                        contentDescription = "Share",
+                        tint = MaterialTheme.colorScheme.onBackground
+                    )
+                }
+
+                // Bookmark Button
+                IconButton(onClick = { /* TODO: handle bookmark */ }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.outline_bookmark_border_24),
+                        contentDescription = "Bookmark",
+                        tint = MaterialTheme.colorScheme.onBackground
+                    )
+                }
+            }
         }
+
+        Spacer(modifier = Modifier.height(8.dp))
 
         // Arabic text
         Text(
             text = arabicText,
-            style = MaterialTheme.typography.headlineMedium.copy(color = MaterialTheme.colorScheme.onBackground),
-            textAlign = TextAlign.Right
+            style = MaterialTheme.typography.headlineMedium.copy(
+                fontSize = 32.sp,
+                color = MaterialTheme.colorScheme.onBackground
+            ),
+            textAlign = TextAlign.Right,
+            modifier = Modifier.fillMaxWidth()
         )
+
         Spacer(modifier = Modifier.height(4.dp))
 
         // Translation text
         Text(
             text = translationText,
-            style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onBackground)
+            style = MaterialTheme.typography.bodyLarge.copy(color = MaterialTheme.colorScheme.onBackground)
         )
 
-        Divider(
-            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.2f),
-            modifier = Modifier.padding(vertical = 8.dp)
-        )
+        Divider(color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.2f))
     }
 }
+
 
 
 @Composable
@@ -120,14 +162,6 @@ private fun playAudio(url: String, context: Context) {
     }
 }
 
-
-
-// Mock data class for Ayah
-data class Ayah(
-    val nomor: Int,
-    val ar: String,
-    val id: String
-)
 
 // Mock data to represent the ayahs
 val mockAyats = listOf(

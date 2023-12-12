@@ -22,10 +22,6 @@ class SuratViewModel(private val context: Context) : ViewModel() {
         getAllSurahs()
     }
 
-    init {
-        getAllSurahs()
-    }
-
     private fun getAllSurahs() {
         viewModelScope.launch {
             _suratListResponse.value = UiState.Loading

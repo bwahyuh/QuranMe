@@ -144,7 +144,7 @@ dependencies {
     implementation("com.google.accompanist:accompanist-coil:0.13.0")
 
     implementation ("com.squareup.okhttp3:logging-interceptor:4.9.0")
-    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.0")
+
 
     implementation("com.google.android.gms:play-services-location:18.0.0")
 

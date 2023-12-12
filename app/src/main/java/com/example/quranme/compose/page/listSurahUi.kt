@@ -1,5 +1,6 @@
 package com.example.quranme.compose.page
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -20,14 +21,15 @@ import com.example.quranme.data.model.Surat
 import com.example.quranme.ui.quran.SuratViewModel
 
 @Composable
-    fun SurahItem(surat: Surat) {
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 8.dp, vertical = 4.dp),
-            shape = RoundedCornerShape(8.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
-        ) {
+fun SurahListItem(surat: Surat, onSurahClick: (Surat) -> Unit) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 8.dp, vertical = 4.dp)
+            .clickable { onSurahClick(surat) }, // Add clickable modifier
+        shape = RoundedCornerShape(8.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+    ) {
             Row(
                 modifier = Modifier
                     .padding(16.dp)
@@ -66,16 +68,10 @@ import com.example.quranme.ui.quran.SuratViewModel
     }
 
 @Composable
-fun SurahList(viewModel: SuratViewModel) {
+fun SurahList(viewModel: SuratViewModel, onSurahClick: (Surat) -> Unit) {
     val surahListState = viewModel.suratListResponse.observeAsState()
 
     when (val uiState = surahListState.value) {
-        is UiState.Loading -> {
-            Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-                CircularProgressIndicator()
-            }
-        }
-
         is UiState.Success -> {
             LazyColumn(
                 modifier = Modifier
@@ -83,8 +79,9 @@ fun SurahList(viewModel: SuratViewModel) {
                     .padding(vertical = 8.dp)
             ) {
                 items(uiState.data ?: emptyList()) { surat ->
-                    SurahItem(surat = surat)
+                    SurahListItem(surat = surat, onSurahClick = onSurahClick)
                 }
+
             }
         }
 
@@ -99,5 +96,11 @@ fun SurahList(viewModel: SuratViewModel) {
                 CircularProgressIndicator()
             }
         }
+
+        else -> {
+            Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                Text(text = "Unknown error")
+            }
     }
+}
 }

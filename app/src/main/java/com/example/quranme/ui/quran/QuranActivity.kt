@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.example.quranme.compose.ui.theme.QuranMeTheme
 import com.example.quranme.compose.page.QuranReader
+import com.example.quranme.compose.ui.components.SurahDescriptionCard
 
 class QuranActivity : ComponentActivity() {
 
@@ -38,6 +39,11 @@ class QuranActivity : ComponentActivity() {
         val context = LocalContext.current
         val ayahs = viewModel.ayahsForSurah.observeAsState(listOf()).value
 
+        val surahInfo = viewModel.surahs.observeAsState(listOf()).value
+            .find { it.nomor == surahNumber }
+
+
+
         // Fetch the Surat object for the given surah number
         val audioMap = viewModel.surahs.observeAsState(listOf()).value
             .find { it.nomor == surahNumber }
@@ -47,6 +53,10 @@ class QuranActivity : ComponentActivity() {
 
         // Menggunakan Column untuk mengatur tata letak
         Column(modifier = Modifier.fillMaxSize()) {
+            surahInfo?.let {
+                SurahDescriptionCard(surah = it)
+            }
+
             // Jika ada ayat, tampilkan QuranReader
             if (ayahs != null) {
                 QuranReader(ayahs, audioMap, context)

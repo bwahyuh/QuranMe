@@ -13,10 +13,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.quranme.compose.state.UiState
 import com.example.quranme.data.model.Juz
 import com.example.quranme.data.model.JuzData
+import com.example.quranme.data.model.SurahInfo
 import com.example.quranme.data.model.Surat
 
 @Composable
@@ -124,3 +126,38 @@ fun SurahItem(surat: Surat, onSurahClick: (Surat) -> Unit) {
         }
     }
 }
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewJuzListView() {
+    // Mock data for SurahInfo
+    val mockStartSurahInfo = SurahInfo(index = "1", verse = "1", name = "Al-Fatiha")
+    val mockEndSurahInfo = SurahInfo(index = "2", verse = "286", name = "Al-Baqarah")
+
+    // Mock data for Juz
+    val mockJuz = Juz(index = "1", start = mockStartSurahInfo, end = mockEndSurahInfo)
+
+    // Mock JuzData
+    val mockJuzData = JuzData(data = listOf(mockJuz))
+
+    // Mock data for Surat
+    val mockSurahs = listOf(
+        Surat(nomor = 1, nama = "Al-Fatiha", namaLatin = "Al-Fatiha", jumlahAyat = 7, tempatTurun = "Makkah", arti = "Pembukaan", deskripsi = "Description", audioFull = mapOf("url" to "http://...")),
+        // ... other Surat instances
+    )
+
+    // Mock map of Surahs by Juz
+    val mockSurahsByJuzMap = mapOf(
+        1 to mockSurahs
+        // ... other mappings
+    )
+
+    // Dummy onSurahClick function
+    val onSurahClick: (Surat) -> Unit = { /* Do nothing */ }
+
+    // Render the JuzListView with mock data
+    JuzListView(juzData = mockJuzData, surahsByJuzMap = mockSurahsByJuzMap, onSurahClick = onSurahClick)
+}
+
+
+

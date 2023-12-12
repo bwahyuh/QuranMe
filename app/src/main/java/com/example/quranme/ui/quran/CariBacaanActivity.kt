@@ -73,7 +73,7 @@ class CariBacaanActivity : ComponentActivity() {
                 ) {
                     Column {
                         TopBar(onMenuClick = {}, onSearchClick = {})
-                        GreetingSection(userName = "Muhammad")
+//                        GreetingSection(userName = "Muhammad")
                         LastReadSection(surahName = "Al-Fatihah", ayatNumber = 1)
                         TabsSection(
                             tabs = listOf("Surah", "Juz"),
@@ -85,8 +85,13 @@ class CariBacaanActivity : ComponentActivity() {
 
                         when (selectedTab) {
                             "Surah" -> {
-                                SurahList(viewModel = viewModelSurat)
+                                SurahList(viewModel = viewModelSurat) { surat ->
+                                    val intent = Intent(this@CariBacaanActivity, QuranActivity::class.java)
+                                    intent.putExtra("SURAH_NUMBER", surat.nomor)
+                                    startActivity(intent)
+                                }
                             }
+
 
                             "Juz" -> {
                                 // Display JuzListView when the map is ready
