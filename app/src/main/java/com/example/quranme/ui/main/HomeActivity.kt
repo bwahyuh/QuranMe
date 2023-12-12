@@ -66,20 +66,14 @@ class HomeActivity : ComponentActivity() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 // Top Bar with back button and title
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 32.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+22222222
+                sss
+                    // BottomBar component here
+                    com.example.quranme.compose.ui.components.BottomBar(
+                        NavController(LocalContext.current)
+                    )
 
-                }
 
-                Spacer(modifier = Modifier.weight(1f))
-                // BottomBar component here
-                com.example.quranme.compose.ui.components.BottomBar(
-                    NavController(LocalContext.current)
-                )
 
             }
         }

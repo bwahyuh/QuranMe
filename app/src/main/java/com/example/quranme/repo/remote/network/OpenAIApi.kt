@@ -15,7 +15,7 @@ interface OpenAIApi {
 }
 
 data class OpenAIRequestBody(
-    val model: String = "gpt-3.5-turbo",
+    val model: String = "gpt-4",
     val messages: List<Message>,
     val max_tokens: Int = 250,
     val n: Int = 1,
