@@ -30,7 +30,6 @@ import com.example.quranme.ui.quran.CariBacaanActivity
 class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContent {
             MaterialTheme {
                 HomePage()
@@ -68,7 +67,6 @@ class HomeActivity : ComponentActivity() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 // Top Bar with back button and title
-// BottomBar component here
                     com.example.quranme.compose.ui.components.BottomBar(
                         NavController(LocalContext.current)
                     )
@@ -85,7 +83,7 @@ class HomeActivity : ComponentActivity() {
     }
 
     private fun navigateToSettingScreen() {
-        val intent = Intent(this, SettingsActivity::class.java)
+        val intent = Intent(this, SignInActivity::class.java)
         startActivity(intent)
     }
 

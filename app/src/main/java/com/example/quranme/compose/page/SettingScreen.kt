@@ -1,6 +1,8 @@
 package com.example.quranme.compose.page
 
+import android.content.Intent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.material3.MaterialTheme
@@ -16,10 +18,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.quranme.R
-import com.example.quranme.compose.ui.components.BottomBar
+
 @Composable
-fun SettingsScreen(onBackClick: () -> Unit) {
+
+fun SettingsScreen(navController: NavController,onBackClick: () -> Unit) {
+    val context = LocalContext.current
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -55,13 +60,21 @@ fun SettingsScreen(onBackClick: () -> Unit) {
         }
 
         // Rest of the settings items
-        SettingItem(title = "Account Setting", color = Color(0xFFA44AFF))
+        SettingItem(title = "Account Setting", color = Color(0xFFA44AFF)) {
+            navController.navigate("sign_in")
+        }
         Spacer(modifier = Modifier.height(16.dp))
-        SettingItem(title = "Gaze Tracking", hasSwitch = true, color = Color(0xFFA44AFF))
+        SettingItem(title = "Gaze Tracking", hasSwitch = true, color = Color(0xFFA44AFF)) {
+            // Handle click for "Gaze Tracking"
+        }
         Spacer(modifier = Modifier.height(16.dp))
-        SettingItem(title = "Privacy Policy", color = Color(0xFFA44AFF))
+        SettingItem(title = "Privacy Policy", color = Color(0xFFA44AFF)) {
+            // Handle click for "Privacy Policy"
+        }
         Spacer(modifier = Modifier.height(16.dp))
-        SettingItem(title = "Terms & Condition", color = Color(0xFFA44AFF))
+        SettingItem(title = "Terms & Condition", color = Color(0xFFA44AFF)) {
+            // Handle click for "Terms & Condition"
+        }
 
     }
     Column(
@@ -88,12 +101,13 @@ fun SettingsScreen(onBackClick: () -> Unit) {
 }
 
 @Composable
-fun SettingItem(title: String, hasSwitch: Boolean = false, color: Color) {
+fun SettingItem(title: String, hasSwitch: Boolean = false, color: Color, onClick: () -> Unit = {}) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .background(color)
-            .padding(8.dp),
+            .padding(8.dp)
+            .clickable { onClick() }, // Add clickable modifier here
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
@@ -105,7 +119,7 @@ fun SettingItem(title: String, hasSwitch: Boolean = false, color: Color) {
         )
         if (hasSwitch) {
             Switch(
-                checked = false, // this should be a state in real app
+                checked = false, // this should be a state in a real app
                 onCheckedChange = {},
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = MaterialTheme.colorScheme.secondary,
@@ -119,11 +133,12 @@ fun SettingItem(title: String, hasSwitch: Boolean = false, color: Color) {
 }
 
 
+
 @Preview(showBackground = true, backgroundColor = 0xFF000000)
 @Composable
 fun SettingsScreenPreview() {
     MaterialTheme {
-        SettingsScreen(onBackClick = {})
+//        SettingsScreen(onBackClick = {})
     }
 }
 

@@ -90,7 +90,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.12.0") // OkHttp
 
     // Coil
-    implementation("io.coil-kt:coil-compose:1.3.2")
+    implementation("io.coil-kt:coil-compose:2.2.2")
 
     // Livedata
     implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
@@ -123,7 +123,7 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     // ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0")
 
 
     // backend untuk chatbot

@@ -7,12 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:433169932478:android:bc3909d050d42c27a83eef",
+        "mobilesdk_app_id": "1:433169932478:android:9d78fddedc0e9f24a83eef",
         "android_client_info": {
-          "package_name": "com.example.quranme"
+          "package_name": "com.bwahyuh.myrealtimeapp"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "433169932478-34t708ap1ij5vblgm9db1ru3sb0hmr5f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyD7Fq-ITIpvRlJRRbUyvu6IiybPv4CGK_4"
@@ -20,7 +25,49 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "433169932478-34t708ap1ij5vblgm9db1ru3sb0hmr5f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:433169932478:android:bc3909d050d42c27a83eef",
+        "android_client_info": {
+          "package_name": "com.example.quranme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "433169932478-g2k8hf3u7lh0gj5msv7q7i1k7veush9i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.quranme",
+            "certificate_hash": "885407b7e708a1c33c0d074e734911563023cf39"
+          }
+        },
+        {
+          "client_id": "433169932478-34t708ap1ij5vblgm9db1ru3sb0hmr5f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7Fq-ITIpvRlJRRbUyvu6IiybPv4CGK_4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "433169932478-34t708ap1ij5vblgm9db1ru3sb0hmr5f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

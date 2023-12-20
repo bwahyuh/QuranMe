@@ -16,10 +16,30 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.quranme.R
+import android.widget.Toast
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import com.example.quranme.compose.state.SignInState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignInScreen(modifier: Modifier = Modifier) {
+fun SignInScreen(modifier: Modifier = Modifier, state: SignInState,
+                 onSignInClick: () -> Unit) {
+    val context = LocalContext.current
+    LaunchedEffect(key1 = state.signInError) {
+        state.signInError?.let { error ->
+            Toast.makeText(
+                context,
+                error,
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -68,11 +88,6 @@ fun SignInScreen(modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = "Forgot Password?",
-            modifier = Modifier.clickable { /* Handle forgot password */ },
-            color = Color(0xFF65D6FC)
-        )
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = { /* Handle sign in */ },
@@ -86,7 +101,7 @@ fun SignInScreen(modifier: Modifier = Modifier) {
         Text(text = "OR", color = Color.White)
         Spacer(modifier = Modifier.height(16.dp))
         Button(
-            onClick = { /* Handle Google sign in */ },
+            onClick = onSignInClick,
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(50),
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1A73E8))
@@ -99,17 +114,6 @@ fun SignInScreen(modifier: Modifier = Modifier) {
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text(text = "Don’t have any account?", color = Color.White)
-            Text(
-                text = " Register",
-                modifier = Modifier.clickable { /* Handle register */ },
-                color = Color(0xFF65D6FC)
-            )
-        }
         Box(
             modifier = modifier
                 .requiredWidth(width = 390.dp)
@@ -149,5 +153,5 @@ fun SignInScreen(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewSignInScreen() {
-    SignInScreen(Modifier)
+//    SignInScreen(Modifier)
 }

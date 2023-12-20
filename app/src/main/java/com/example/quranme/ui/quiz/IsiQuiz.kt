@@ -76,15 +76,9 @@ class IsiQuiz : ComponentActivity() {
         )
 
         LaunchedEffect(currentQuestion) {
-            if (currentQuestion < totalQuestions - 1) {
-                correctAnswer = getCorrectAnswer(currentQuestion)
-                // Pastikan bahwa currentQuestion masih dalam rentang panjang array
-                if (currentQuestion < questions.size) {
-                    // Lakukan operasi dengan array di sini
-                }
-            } else {
-                // Kuis selesai, pindah ke halaman HasilQuizActivity
-                Log.d("IsiQuiz", "Pindah ke HasilQuizActivity")
+            if (currentQuestion == totalQuestions) {
+                // Quiz finished, navigate to HasilQuizActivity
+                Log.d("IsiQuiz", "Quiz finished, navigating to HasilQuizActivity")
                 val intent = Intent(this@IsiQuiz, HasilQuizActivity::class.java)
                 intent.putExtra("score", score)
                 intent.putExtra("totalQuestions", totalQuestions)
@@ -223,6 +217,7 @@ class IsiQuiz : ComponentActivity() {
             // Move to the next question
             currentQuestion++
             Log.d("IsiQuiz", "Move to the next question - currentQuestion: $currentQuestion")
+            selectedAnswer = ""
         } else {
             // Quiz finished, navigate to HasilQuizActivity
             Log.d("IsiQuiz", "Quiz finished, navigating to HasilQuizActivity")

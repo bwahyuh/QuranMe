@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">QuranMe</string>
+    <string name="web_client_id">433169932478-34t708ap1ij5vblgm9db1ru3sb0hmr5f.apps.googleusercontent.com</string>
     <string name="title_activity_list_surah">ListSurahActivity</string>
     <string name="title_activity_quran">QuranActivity</string>
     <string name="title_activity_chatbot">ChatbotActivity</string>
