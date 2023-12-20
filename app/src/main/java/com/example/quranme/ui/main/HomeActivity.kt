@@ -66,9 +66,7 @@ class HomeActivity : ComponentActivity() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 // Top Bar with back button and title
-22222222
-                sss
-                    // BottomBar component here
+// BottomBar component here
                     com.example.quranme.compose.ui.components.BottomBar(
                         NavController(LocalContext.current)
                     )
