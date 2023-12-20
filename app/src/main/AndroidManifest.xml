@@ -25,7 +25,11 @@
         android:theme="@style/Theme.QuranMe"
 
         tools:targetApi="31">
-
+        <activity android:name=".ui.bookmark.BookmarkActivity"
+            android:exported="true"
+            android:label="BookmarkActivity"
+            android:theme="@style/Theme.QuranMe"
+            />
         <activity
             android:name=".ui.quran.QuranActivity"
             android:exported="true"

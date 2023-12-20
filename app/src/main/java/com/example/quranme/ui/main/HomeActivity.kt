@@ -23,6 +23,7 @@ import com.example.quranme.compose.ui.components.TopBar
 import com.example.quranme.compose.ui.components.Menu
 import com.example.quranme.compose.ui.components.LastReadSection
 import com.example.quranme.compose.page.PrayerTimeList
+import com.example.quranme.ui.bookmark.BookmarkActivity
 import com.example.quranme.ui.quiz.IsiQuiz
 import com.example.quranme.ui.quran.CariBacaanActivity
 
@@ -47,7 +48,8 @@ class HomeActivity : ComponentActivity() {
                 currentTime = "15:00 WIB",
                 onMenuSelected = { menuTitle ->
                     when (menuTitle) {
-                        "Al-Qur'an", "Bookmark" -> navigateToCariBacaanActivity()
+                        "Al-Qur'an" -> navigateToCariBacaanActivity()
+                        "Bookmark" -> navigateToBookmarkActivity() // Updated case
                         "Settings" -> navigateToSettingScreen()
                         "Quiz" -> navigateToQuizActivity()
                     }
@@ -89,6 +91,11 @@ class HomeActivity : ComponentActivity() {
 
     private fun navigateToQuizActivity() {
         val intent = Intent(this, IsiQuiz::class.java)
+        startActivity(intent)
+    }
+
+    private fun navigateToBookmarkActivity() {
+        val intent = Intent(this, BookmarkActivity::class.java)
         startActivity(intent)
     }
 }

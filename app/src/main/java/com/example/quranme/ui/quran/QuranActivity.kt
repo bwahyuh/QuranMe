@@ -41,8 +41,8 @@ class QuranActivity : ComponentActivity() {
 
         val surahInfo = viewModel.surahs.observeAsState(listOf()).value
             .find { it.nomor == surahNumber }
-
-
+        val bookmark = viewModel.bookmark.observeAsState().value
+        val bookmarkedAyat = bookmark?.ayatNumber ?: -1
 
         // Fetch the Surat object for the given surah number
         val audioMap = viewModel.surahs.observeAsState(listOf()).value
@@ -59,13 +59,21 @@ class QuranActivity : ComponentActivity() {
 
             // Jika ada ayat, tampilkan QuranReader
             if (ayahs != null) {
-                QuranReader(ayahs, audioMap, context)
+                QuranReader(
+                    ayahs = ayahs,
+                    audioMap = audioMap,
+                    context = context,
+                    bookmarkedAyat = bookmarkedAyat,
+                    onBookmark = { ayatNumber ->
+                        viewModel.saveBookmark(surahNumber, ayatNumber)
+                    }
+                )
+
+                // BottomBar ditempatkan di bagian bawah Column
+                com.example.quranme.compose.ui.components.BottomBar(NavController(LocalContext.current))
             }
-
-            // BottomBar ditempatkan di bagian bawah Column
-            com.example.quranme.compose.ui.components.BottomBar(NavController(LocalContext.current))
         }
+
+
     }
-
-
 }

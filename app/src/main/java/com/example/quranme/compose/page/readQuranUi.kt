@@ -26,6 +26,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -44,8 +48,11 @@ fun AyahItem(
     arabicText: String,
     translationText: String,
     audioUrl: String,
-    onPlayAudio: (String) -> Unit
+    onPlayAudio: (String) -> Unit,
+    isBookmarked: Boolean,
+    onBookmark: (Int) -> Unit
 ) {
+    var bookmarked by remember { mutableStateOf(isBookmarked) }
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -90,10 +97,12 @@ fun AyahItem(
                     )
                 }
 
-                // Bookmark Button
-                IconButton(onClick = { /* TODO: handle bookmark */ }) {
+                IconButton(onClick = {
+                    bookmarked = !bookmarked
+                    onBookmark(ayahNumber)
+                }) {
                     Icon(
-                        painter = painterResource(id = R.drawable.outline_bookmark_border_24),
+                        painter = painterResource(id = if (bookmarked) R.drawable.bookmark_added else R.drawable.bookmark_border),
                         contentDescription = "Bookmark",
                         tint = MaterialTheme.colorScheme.onBackground
                     )
@@ -129,7 +138,13 @@ fun AyahItem(
 
 
 @Composable
-fun QuranReader(ayahs: List<Ayat>, audioMap: Map<Int, String>, context: Context) {
+fun QuranReader(
+    ayahs: List<Ayat>,
+    audioMap: Map<Int, String>,
+    context: Context,
+    onBookmark: (Int) -> Unit, // Add this parameter,
+    bookmarkedAyat: Int
+) {
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
         ayahs.forEach { ayah ->
             val audioUrl = audioMap[ayah.number.toInt()] ?: ""
@@ -140,7 +155,9 @@ fun QuranReader(ayahs: List<Ayat>, audioMap: Map<Int, String>, context: Context)
                 audioUrl = audioUrl,
                 onPlayAudio = { url ->
                     playAudio(url, context)
-                }
+                },
+                isBookmarked = ayah.number == bookmarkedAyat,
+                onBookmark = onBookmark
             )
         }
     }
