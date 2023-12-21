@@ -34,6 +34,9 @@ class QuranViewModel(private val context: Context) : ViewModel() {
     private val bookmarkDao = db.bookmarkDao()
     // LiveData for bookmarks
     val bookmarks: LiveData<List<Bookmark>> = bookmarkDao.getAllBookmarks()
+
+
+
     init {
         loadSurahs()
     }

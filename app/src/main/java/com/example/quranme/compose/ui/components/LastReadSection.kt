@@ -22,7 +22,7 @@ fun LastReadSection(lastSurahName: String, lastAyahNumber: Int) {
         )
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = "Last Read", style = MaterialTheme.typography.titleLarge)
+            Text(text = "Terakhir dibaca", style = MaterialTheme.typography.titleLarge)
             Text(text = lastSurahName, style = MaterialTheme.typography.titleMedium)
             Text(text = "Ayat No: $lastAyahNumber", style = MaterialTheme.typography.bodyLarge)
         }

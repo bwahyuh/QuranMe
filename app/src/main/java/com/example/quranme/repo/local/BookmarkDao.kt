@@ -18,6 +18,10 @@ interface BookmarkDao {
 
     @Delete
     suspend fun deleteBookmark(bookmark: Bookmark)
+
+    @Query("SELECT * FROM bookmarks ORDER BY dateAdded DESC LIMIT 1")
+    fun getLastBookmark(): LiveData<Bookmark?>
+
 }
 
 

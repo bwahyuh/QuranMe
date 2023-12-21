@@ -6,28 +6,40 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.quranme.compose.page.PrayerTimeList
 import com.example.quranme.ui.quiz.PilihanQuiz
 import com.example.quranme.compose.ui.components.TopBar
 import com.example.quranme.compose.ui.components.Menu
 import com.example.quranme.compose.ui.components.LastReadSection
 import com.example.quranme.compose.page.PrayerTimeList
+import com.example.quranme.repo.local.DatabaseBuilder.getDatabase
+//import com.example.quranme.repo.local.getDatabase
 import com.example.quranme.ui.bookmark.BookmarkActivity
+import com.example.quranme.ui.bookmark.BookmarkViewModel
+import com.example.quranme.ui.bookmark.BookmarkViewModelFactory
+import com.example.quranme.ui.main.PrayerTimesViewModel
+import com.example.quranme.ui.main.SignInActivity
 import com.example.quranme.ui.quiz.IsiQuiz
 import com.example.quranme.ui.quran.CariBacaanActivity
+import com.example.quranme.ui.quran.QuranViewModel
 
 class HomeActivity : ComponentActivity() {
+    val viewModel: PrayerTimesViewModel by viewModels()
+//    private val viewModel: QuranViewModel by viewModels()
+    private val bookmarkViewModel: BookmarkViewModel by viewModels {
+        BookmarkViewModelFactory(getDatabase(this).bookmarkDao())
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -39,7 +51,8 @@ class HomeActivity : ComponentActivity() {
 
     @Composable
     fun HomePage() {
-        val viewModel: PrayerTimesViewModel by viewModels()
+        val lastBookmark by bookmarkViewModel.lastBookmark.observeAsState()
+
         Column {
             TopBar(userName = "Tanvir Ahassan")
             Menu(
@@ -48,17 +61,23 @@ class HomeActivity : ComponentActivity() {
                 onMenuSelected = { menuTitle ->
                     when (menuTitle) {
                         "Al-Qur'an" -> navigateToCariBacaanActivity()
-                        "Bookmark" -> navigateToBookmarkActivity() // Updated case
+                        "Bookmark" -> navigateToBookmarkActivity()
                         "Settings" -> navigateToSettingScreen()
                         "Quiz" -> navigateToQuizActivity()
                     }
                 }
             )
-            LastReadSection(
-                lastSurahName = "Al-Fatihah",
-                lastAyahNumber = 1
-            )
+
+            // Display the LastReadSection with the last bookmark data
+            lastBookmark?.let { bookmark ->
+                LastReadSection(
+                    lastSurahName = "Surah: ${bookmark.surahNumber}",
+                    lastAyahNumber = bookmark.ayatNumber
+                )
+            }
+
             PrayerTimeList(prayerTimes = viewModel.prayerTimes.value)
+
             // Add PrayerTimeList and BottomNavigationBar if needed
             Column(
                 modifier = Modifier
@@ -66,13 +85,10 @@ class HomeActivity : ComponentActivity() {
                     .padding(0.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // Top Bar with back button and title
-                    com.example.quranme.compose.ui.components.BottomBar(
-                        NavController(LocalContext.current)
-                    )
-
-
-
+                // Bottom Bar with back button and title
+                com.example.quranme.compose.ui.components.BottomBar(
+                    NavController(LocalContext.current)
+                )
             }
         }
     }
