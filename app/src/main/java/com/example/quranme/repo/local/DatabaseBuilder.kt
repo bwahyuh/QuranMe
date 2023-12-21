@@ -13,7 +13,9 @@ object DatabaseBuilder {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "quranme-database"
-                ).build()
+                )
+                    .fallbackToDestructiveMigration() // Add this line
+                    .build()
             }
         }
         return instance!!

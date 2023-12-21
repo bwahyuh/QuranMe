@@ -4,27 +4,30 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
 import com.example.quranme.compose.ui.theme.QuranMeTheme
 import com.example.quranme.compose.page.QuranReader
 import com.example.quranme.compose.ui.components.SurahDescriptionCard
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
 
 class QuranActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
-
         super.onCreate(savedInstanceState)
-        val surahNumber = intent.getIntExtra("SURAH_NUMBER", 1) // Default to 1 if not found
+        val surahNumber = intent.getIntExtra("SURAH_NUMBER", 1)
 
         val viewModel = ViewModelProvider(this, QuranViewModel.QuranViewModelFactory(this))
             .get(QuranViewModel::class.java)
+
+        // Ensure this function is called to load the Ayahs
         viewModel.loadAyatForSurah(surahNumber)
 
         setContent {
@@ -37,43 +40,28 @@ class QuranActivity : ComponentActivity() {
     @Composable
     fun QuranReaderScreen(viewModel: QuranViewModel, surahNumber: Int) {
         val context = LocalContext.current
-        val ayahs = viewModel.ayahsForSurah.observeAsState(listOf()).value
+        val listState = rememberLazyListState()
+        val ayahs = viewModel.ayahsForSurah.observeAsState(initial = listOf()).value
+        val bookmarks = viewModel.bookmarks.observeAsState(initial = listOf()).value
+        val surahInfo = viewModel.surahs.value?.find { it.nomor == surahNumber }
 
-        val surahInfo = viewModel.surahs.observeAsState(listOf()).value
-            .find { it.nomor == surahNumber }
-        val bookmark = viewModel.bookmark.observeAsState().value
-        val bookmarkedAyat = bookmark?.ayatNumber ?: -1
-
-        // Fetch the Surat object for the given surah number
-        val audioMap = viewModel.surahs.observeAsState(listOf()).value
-            .find { it.nomor == surahNumber }
-            ?.audioFull
-            // Transform the map keys from String to Int
-            ?.mapKeys { it.key.toIntOrNull() ?: 0 } ?: emptyMap()
-
-        // Menggunakan Column untuk mengatur tata letak
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column {
+            // Display Surah information
             surahInfo?.let {
                 SurahDescriptionCard(surah = it)
             }
 
-            // Jika ada ayat, tampilkan QuranReader
-            if (ayahs != null) {
-                QuranReader(
-                    ayahs = ayahs,
-                    audioMap = audioMap,
-                    context = context,
-                    bookmarkedAyat = bookmarkedAyat,
-                    onBookmark = { ayatNumber ->
-                        viewModel.saveBookmark(surahNumber, ayatNumber)
-                    }
-                )
-
-                // BottomBar ditempatkan di bagian bawah Column
-                com.example.quranme.compose.ui.components.BottomBar(NavController(LocalContext.current))
-            }
+            // Quran reader with Ayahs
+            QuranReader(
+                ayahs = ayahs,
+                audioMap = surahInfo?.audioFull?.mapKeys { it.key.toIntOrNull() ?: 0 } ?: emptyMap(),
+                context = context,
+                bookmarks = bookmarks,
+                onBookmark = { ayatNumber ->
+                    viewModel.saveBookmark(surahNumber, ayatNumber)
+                },
+                listState = listState
+            )
         }
-
-
     }
 }

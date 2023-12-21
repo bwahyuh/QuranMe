@@ -14,6 +14,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -41,6 +44,7 @@ import com.example.quranme.data.model.Ayat
 import com.example.quranme.data.model.Surat
 import androidx.compose.ui.res.painterResource
 import com.example.quranme.R
+import com.example.quranme.data.model.Bookmark
 
 @Composable
 fun AyahItem(
@@ -142,26 +146,28 @@ fun QuranReader(
     ayahs: List<Ayat>,
     audioMap: Map<Int, String>,
     context: Context,
-    onBookmark: (Int) -> Unit, // Add this parameter,
-    bookmarkedAyat: Int
+    bookmarks: List<Bookmark>,
+    onBookmark: (Int) -> Unit,
+    listState: LazyListState
 ) {
-    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-        ayahs.forEach { ayah ->
+    LazyColumn(state = listState) {
+        items(ayahs) { ayah ->
             val audioUrl = audioMap[ayah.number.toInt()] ?: ""
+            val isBookmarked = bookmarks.any { it.surahNumber == ayah.number && it.ayatNumber == ayah.number.toInt() }
             AyahItem(
                 ayahNumber = ayah.number.toInt(),
                 arabicText = ayah.arabicText,
                 translationText = ayah.translationId,
                 audioUrl = audioUrl,
-                onPlayAudio = { url ->
-                    playAudio(url, context)
-                },
-                isBookmarked = ayah.number == bookmarkedAyat,
+                onPlayAudio = { url -> playAudio(url, context) },
+                isBookmarked = isBookmarked,
                 onBookmark = onBookmark
             )
         }
     }
 }
+
+
 
 private fun playAudio(url: String, context: Context) {
     if (url.isNotBlank()) {
